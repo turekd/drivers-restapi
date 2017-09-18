@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Development -->
+<!DOCTYPE log4j:configuration SYSTEM
+        "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+
+    <logger name="it.dturek.github">
+        <level value="debug"/>
+    </logger>
+    <!-- Root Logger -->
+    <root>
+        <priority value="info" />
+        <appender-ref ref="Console" />
+    </root>
+</log4j:configuration>
