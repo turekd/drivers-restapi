@@ -3,7 +3,6 @@ package it.dturek.github.drivers.validator;
 import it.dturek.github.drivers.domain.DriverCar;
 import it.dturek.github.drivers.exception.ResourceNotFoundException;
 import it.dturek.github.drivers.service.CarModelService;
-import it.dturek.github.drivers.service.DriverCarService;
 import it.dturek.github.drivers.service.DriverService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -17,9 +16,6 @@ import org.springframework.validation.Validator;
 public class DriverCarValidator implements Validator {
 
     private static final Logger LOGGER = LogManager.getLogger(DriverCarValidator.class);
-
-    @Autowired
-    private DriverCarService driverCarService;
 
     @Autowired
     private DriverService driverService;
@@ -36,14 +32,14 @@ public class DriverCarValidator implements Validator {
     public void validate(Object o, Errors errors) {
         DriverCar form = (DriverCar) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "carModel", "name.empty", "validation.error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "carModel", "carModel.empty", "validation.error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "driver", "driver.empty", "validation.error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateFrom", "dateFrom.empty", "validation.error.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateTo", "dateTo.empty", "validation.error.empty");
 
         // Check whether dateFrom is not lower than dateTo
         if (form.getDateFrom() != null && form.getDateTo() != null && form.getDateTo().getTime() < form.getDateFrom().getTime()) {
-            errors.rejectValue("dateFrom", "dateFrom.invalid", null, "validation.error.datefrom_lower_than_dateto");
+            errors.rejectValue("dateFrom", "dateFrom.invalid", null, "validation.error.dateto_lower_than_datefrom");
         }
 
         // Check whether driver exists

@@ -31,7 +31,7 @@ public class CarModelValidator implements Validator {
     @Override
     public void validate(Object object, Errors errors) {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "name.empty", "validation.error.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "brand", "name.empty", "validation.error.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "brand", "brand.empty", "validation.error.empty");
 
         CarModel form = (CarModel) object;
 
@@ -40,13 +40,13 @@ public class CarModelValidator implements Validator {
             try {
                 carBrandService.findById(form.getBrand().getId());
             } catch (ResourceNotFoundException e) {
-                errors.rejectValue("brand", "name.not_exist", null, "validation.error.brand_not_exist");
+                errors.rejectValue("brand", "brand.not_exist", null, "validation.error.brand_not_exist");
             }
         }
 
         // Check whether name is unique
         CarModel modelWithSameName = carModelService.findByName(form.getName());
-        if (form.getBrand() != null && modelWithSameName != null && modelWithSameName.getBrand().getId().equals(form.getBrand().getId())) {
+        if (modelWithSameName != null && form.getBrand() != null && modelWithSameName.getBrand().getId().equals(form.getBrand().getId())) {
             errors.rejectValue("name", "brand.duplicated", null, "validation.error.model_duplicated");
         }
 
