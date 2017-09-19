@@ -1,6 +1,7 @@
 package it.dturek.github.drivers.service.impl;
 
 import it.dturek.github.drivers.Util;
+import it.dturek.github.drivers.domain.Driver;
 import it.dturek.github.drivers.domain.DriverCar;
 import it.dturek.github.drivers.exception.ResourceNotFoundException;
 import it.dturek.github.drivers.repository.DriverCarRepository;
@@ -48,5 +49,10 @@ public class DriverCarServiceImpl implements DriverCarService {
     @Override
     public void deleteAll() {
         driverCarRepository.deleteAll();
+    }
+
+    @Override
+    public List<DriverCar> findAllByDriver(Driver driver) {
+        return driverCarRepository.findAllByDriver(driver);
     }
 }

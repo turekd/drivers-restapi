@@ -1,6 +1,8 @@
 package it.dturek.github.drivers.controller;
 
 import it.dturek.github.drivers.domain.Driver;
+import it.dturek.github.drivers.domain.DriverCar;
+import it.dturek.github.drivers.service.DriverCarService;
 import it.dturek.github.drivers.service.DriverService;
 import it.dturek.github.drivers.validator.DriverValidator;
 import org.apache.log4j.LogManager;
@@ -21,6 +23,9 @@ public class DriverController {
 
     @Autowired
     private DriverService driverService;
+
+    @Autowired
+    private DriverCarService driverCarService;
 
     @Autowired
     private DriverValidator driverValidator;
@@ -65,6 +70,12 @@ public class DriverController {
     public Driver update(@PathVariable("id") Long id, @Valid @ModelAttribute(MODEL_ATTRIBUTE_UPDATE) Driver driver) {
         driverService.findById(id);
         return driverService.update(driver);
+    }
+
+    @GetMapping("/{id}/cars")
+    public List<DriverCar> findDriverCars(@PathVariable("id") Long id) {
+        Driver driver = driverService.findById(id);
+        return driverCarService.findAllByDriver(driver);
     }
 
 }
