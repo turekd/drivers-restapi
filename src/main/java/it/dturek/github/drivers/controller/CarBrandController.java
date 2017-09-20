@@ -1,7 +1,9 @@
 package it.dturek.github.drivers.controller;
 
 import it.dturek.github.drivers.domain.CarBrand;
+import it.dturek.github.drivers.domain.CarModel;
 import it.dturek.github.drivers.service.CarBrandService;
+import it.dturek.github.drivers.service.CarModelService;
 import it.dturek.github.drivers.validator.CarBrandValidator;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -23,6 +25,9 @@ public class CarBrandController {
 
     @Autowired
     private CarBrandValidator carBrandValidator;
+
+    @Autowired
+    private CarModelService carModelService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -63,5 +68,12 @@ public class CarBrandController {
     public void deleteAll() {
         carBrandService.deleteAll();
     }
+
+    @GetMapping("/{id}/models")
+    public List<CarModel> findBrandModels(@PathVariable("id") Long id) {
+        CarBrand carBrand = carBrandService.findById(id);
+        return carModelService.findAllByBrand(carBrand);
+    }
+
 
 }

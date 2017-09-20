@@ -1,6 +1,7 @@
 package it.dturek.github.drivers.service.impl;
 
 import it.dturek.github.drivers.Util;
+import it.dturek.github.drivers.domain.CarBrand;
 import it.dturek.github.drivers.domain.CarModel;
 import it.dturek.github.drivers.exception.ResourceNotFoundException;
 import it.dturek.github.drivers.repository.CarModelRepository;
@@ -53,5 +54,10 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     public CarModel findByName(String name) {
         return carModelRepository.findOneByName(name);
+    }
+
+    @Override
+    public List<CarModel> findAllByBrand(CarBrand carBrand) {
+        return carModelRepository.findAllByBrand(carBrand);
     }
 }
